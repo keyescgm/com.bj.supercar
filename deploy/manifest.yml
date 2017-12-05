@@ -1,0 +1,42 @@
+#配置文件的版本
+version: v1
+ 
+#环境说明以及环境变量定义
+common:
+  os: centos6.5
+  tools:
+    oracle-jdk: 8
+
+#构建的配置信息
+build:
+
+  #依赖工具配置
+  tools:
+    oracle-jdk: 8
+    maven: 3.3.3
+
+  #编译的运行配置
+  run:
+    #相对于代码仓中代码的路径
+    workDir: ./
+    #执行编译脚本
+    cmd:
+      - sh deploy/compile.sh
+
+  #编译结果(需要部署的文件)打包
+  target:
+    #用于调整的打包目录
+    distDir: com.bj.supercar.mvc/target/
+    #保留文件
+    files:
+      - ./*.jar
+      - ../../deploy
+
+#部署编译结果
+autodeploy:
+
+  #执行文件
+  run: sh deploy/run.sh
+
+  #检查服务是否启动(HTTP)
+  #check: sh deploy/check.sh

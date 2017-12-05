@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>模型管理平台</title>
+
+    <style>
+        label.error {
+            color: #8a1f11;
+            display: inline-block;
+            margin-left: 1.5em;
+        }
+
+        input.error {
+            background: rgb(251, 227, 228);
+            border: 1px solid #fbc2c4;
+            color: #8a1f11;
+        }
+
+    </style>
+    <!-- Bootstrap Core CSS -->
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="../../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="../../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../../dist/css/jquery-editable-select.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/pages/index.html">dashbord</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">模型列表</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <form id="models_form" method="post">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <button type="button" onclick="showaddModel()" class="btn btn-info">新建模型</button>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
+                            <table width="100%" class="table table-striped table-bordered table-hover"
+                                   id="modelmanage-table">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>名称</th>
+                                    <th>生效范围</th>
+                                    <th>appkey</th>
+                                    <th>类型</th>
+                                    <th>创建时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+
+                    </div>
+
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </form>
+        </div>
+    </div>
+
+
+    <!-- /#page-wrapper -->
+    <!--pop window-->
+    <!-- 模态框（Modal） -->
+    <div class="modal fade " id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+         aria-hidden="true">
+        <form id="addModel_form" action="/api/modelmanage/add" enctype="multipart/form-data" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" onclick="showaddModelWindow()" id="addModalLabel">添加模型信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="modelName" class="form-label">模型名称:</label>
+                            <input id="modelName" name="modelName" class="form-control" value="">
+                        </div>
+                        <div id="appkeylists">
+                            <label for="modelAppkey" class="form-label">appkey选择:</label>
+                            <select class="form-control" id="modelAppkey" name="modelAppkey">
+                            </select>
+                        </div>
+                        <div id="modelTypelists">
+                            <label for="modelType" class="form-label">模型类型选择:</label>
+                            <select class="form-control" id="modelType" name="modelType">
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modelHosts" class="form-label">范围限制:</label>
+                            <input id="modelHosts" name="modelHosts" class="form-control" placeholder="默认全部加载" value="">
+                        </div>
+                        <div>
+                            <label for="enabled" class="form-label">生效状态选择:</label>
+                            <select class="form-control" id="enabled" name="enabled">
+                                <option value="">是否生效</option>
+                                <option value="1">生效</option>
+                                <option value="0">不生效</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="add_domainid_template_1" class="form-label">DomainIds:</label>
+                            <div id="add_domainid_template_1">
+                                <div class="item form-inline panel panel-success" id="domainid_div_1"
+                                     name="domainid_div_1" style="margin-bottom: 0px;">
+
+                                    <div class="panel-heading" style="margin-bottom: 0px;    padding: 2px 1px;">
+                                        <div class="form-group">
+                                            <input id="domainName_1" name="domainName_1" class="input-large" type="text"
+                                                   placeholder="domainName" style="height:30px;">
+
+                                        </div>
+                                        <div class="form-group">
+                                            主key:
+                                            <select class="form-control" id="domainid_mankey_1" name="domainid_mankey_1"
+                                                    onfocus="domainkeyFocus(1)" style="height:30px;width:100px;">
+                                            </select>
+                                            <!-- <input id="domainid_mankey_1" name="domainid_mankey_1" class="input-large" placeholder="主key索引位置" type="text" style="height:30px;" >-->
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" id="domainall_load_1" name="domainall_load_1"
+                                                    style="height:30px;">
+                                                <option value="1">全加载</option>
+                                                <option value="0">不全加载</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="button" class="btn btn-default" value="+"
+                                                   onclick="addDomainItem('add_domainid_template_1')">
+                                        </div>
+                                        <div class="form-group"
+                                             style="float: right;display: inline-block;margin-top: 5px;margin-right: 5px">
+                                            <a><p class="fa fa-angle-double-down" value="1" data-toggle="collapse"
+                                                  onclick="foldFunc(this,'add_domainfield_template_1')"/></a>
+                                        </div>
+                                        <!-- <div class="form-group">
+                                             <input type="button" class="btn btn-default" value="-" onclick="removeDomainItem(event)">
+                                         </div>-->
+                                    </div>
+                                    <div class="panel-body" style="margin-bottom: 0px;    padding: 1px;">
+                                        <div id="add_domainfield_template_1" class="collapse in">
+                                            <input type="hidden" name="domainid_index" value="1">
+                                            <input type="hidden" name="domainfield_num" value="1">
+                                            <div class="item form-inline" style="margin-top:10px">
+                                                field:
+                                                <select class="form-control" id="domainfield_1_1" name="domainfield_1_1"
+                                                        onfocus="domainfieldFocus(1,1)"
+                                                        style="height:30px;width:120px;">
+                                                </select>
+                                                <!--  <input id="domainfield_1_1" name="domainfield_1_1" class="input-large" type="text"  placeholder="field"  style="height:30px;width:120px;">-->
+                                                <input id="domainfieldmap_desc_1_1" name="domainfieldmap_desc_1_1"
+                                                       class="input-large" placeholder="fieldmap" type="text"
+                                                       style="height:30px;width:120px;">
+                                                <!-- <input id="domainfieldextractor_desc_1_1" name="domainfieldextractor_desc_1_1" class="input-large" placeholder="exactor" type="text" style="height:30px;width:120px;" >-->
+                                                <input type="button" class="btn btn-default" value="add"
+                                                       onclick="addDomainFieldItem('add_domainfield_template_1')">
+                                                <!-- <div class="form-group">
+                                                     <input type="button" class="btn btn-default" value="-" onclick="removeDomainItem(event)">
+                                                 </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="filelist">
+                            <label class="form-label">模型文件选择:</label>
+                            <div id="add_item_template_1">
+                                <div class="item form-inline" style="margin-top:10px">
+                                    <div class="form-group">
+                                        <input id="input-b1_1" onchange="inputfileChange(this)" name="input-b1_1"
+                                               type="file" style="display:none">
+                                        <input id="photoCover_1" name="photoCover_1" class="input-large"
+                                               placeholder="若非本地文件则填hdfs" type="text" style="height:30px;">
+                                        <a class="btn btn-warning" onclick="$('input[id=input-b1_1]').click();">选择文件</a>
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="fileType_1" name="fileType_1"
+                                                style="width: 120px">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="button" class="btn btn-default" value="+"
+                                               onclick="addItem('add_item_template_1')">
+                                    </div>
+                                    <!-- <div class="form-group">
+                                         <input type="button" class="btn btn-default" value="-" onclick="removeItem(event)">
+                                     </div>-->
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="addmanagemodel()">提交</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+            <input type="hidden" name="modelfilesize" id="modelfilesize" value="1">
+            <input type="hidden" name="domainsize" id="domainsize" value="1">
+        </form>
+    </div>
+    <!--pop window end-->
+    <div id="add_domainid_template" style="display: none">
+        <div class="item form-inline panel panel-success" id="domainid_div_domainNumber"
+             name="domainid_div_domainNumber" style="margin-bottom: 0px;">
+
+            <div class="panel-heading" style="margin-bottom: 0px;    padding: 2px 1px;">
+                <div class="form-group">
+                    <input id="domainName_domainNumber" name="domainName_domainNumber" class="input-large" type="text"
+                           placeholder="domainName" style="height:30px;">
+                </div>
+                <div class="form-group">
+                    <!--<input id="domainid_mankey_domainNumber" name="domainid_mankey_domainNumber" class="input-large" placeholder="主key索引位置" type="text" style="height:30px;" >-->
+                    主key:
+                    <select class="form-control" id="domainid_mankey_domainNumber" name="domainid_mankey_domainNumber"
+                            onfocus="domainkeyFocus(domainNumber)" style="height:30px;width:100px;">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" id="domainall_load_domainNumber" name="domainall_load_domainNumber"
+                            style="height:30px;">
+                        <option value="1">全加载</option>
+                        <option value="0">不全加载</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-default" value="+"
+                           onclick="addDomainItem('add_domainid_template_domainNumber')">
+                </div>
+                <div class="form-group">
+                    <input type="button" class="btn btn-default" value="-" onclick="removeDomainItem(event)">
+                </div>
+                <div class="form-group" style="float: right;display: inline-block;margin-top: 5px;margin-right: 5px">
+                    <a><p class="fa fa-angle-double-down" value="1" data-toggle="collapse"
+                          onclick="foldFunc(this,'add_domainfield_template_domainNumber')"/></a>
+                </div>
+            </div>
+            <div class="panel-body" style="margin-bottom: 0px;    padding: 1px;">
+                <div id="add_domainfield_template_domainNumber" class="collapse in">
+                    <input type="hidden" name="domainid_index" value="1">
+                    <input type="hidden" name="domainfield_num" value="1">
+                    <div class="item form-inline" style="margin-top:10px">
+                        field:
+                        <select class="form-control" name="domainfield_domainNumber_fieldNumber"
+                                onfocus="domainfieldFocus(domainNumber,fieldNumber)" style="height:30px;width:120px;">
+                        </select>
+                        <!-- <input  name="domainfield_domainNumber_fieldNumber" class="input-large" type="text"  placeholder="field"  style="height:30px;width:120px">-->
+                        <input name="domainfieldmap_desc_domainNumber_fieldNumber" class="input-large"
+                               placeholder="fieldmap" type="text" style="height:30px;width:120px">
+                        <!-- <input  name="domainfieldextractor_desc_domainNumber_fieldNumber" class="input-large" placeholder="exactor" type="text" style="height:30px;width:120px" >-->
+                        <input type="button" class="btn btn-default" value="add"
+                               onclick="addDomainFieldItem('add_domainfield_template_domainNumber')">
+                        <!-- <div class="form-group">
+                             <input type="button" class="btn btn-default" value="-" onclick="removeDomainFieldItem(event)">
+                         </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="add_domainfield_template" style="display: none">
+        <div class="item form-inline" style="margin-top:10px">
+            field:
+            <select class="form-control" id="domainfield_domainNumber_fieldNumber"
+                    name="domainfield_domainNumber_fieldNumber" onfocus="domainfieldFocus(domainNumber,fieldNumber)"
+                    style="height:30px;width:120px;">
+            </select>
+            <!-- <input id="domainfield_domainNumber_fieldNumber" name="domainfield_domainNumber_fieldNumber" class="input-large" type="text"  placeholder="field"  style="height:30px;width:120px">-->
+            <input id="domainfieldmap_desc_domainNumber_fieldNumber" name="domainfieldmap_desc_domainNumber_fieldNumber"
+                   class="input-large" placeholder="fieldmap" type="text" style="height:30px;width:120px">
+            <!--<input id="domainfieldextractor_desc_domainNumber_fieldNumber" name="domainfieldextractor_desc_domainNumber_fieldNumber" class="input-large" placeholder="exactor" type="text" style="height:30px;width:120px" >-->
+            <input type="button" class="btn btn-default" value="add"
+                   onclick="addDomainFieldItem('add_domainfield_template_domainNumber')">
+            <input type="button" class="btn btn-default" value="del" onclick="removeDomainFieldItem(event)">
+        </div>
+    </div>
+    <div id="add_item_template" style="display: none">
+        <div class="item form-inline" style="margin-top:10px">
+            <div class="form-group">
+                <input id="input-b1_filenumber" onchange="inputfileChange(this)" name="input-b1_filenumber" type="file"
+                       style="display:none">
+                <input id="photoCover_filenumber" name="photoCover_filenumber" placeholder="若非本地文件则填hdfs"
+                       class="input-large" type="text" style="height:30px;">
+                <a class="btn btn-warning" onclick="$('input[id=input-b1_filenumber]').click();">选择文件</a>
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="fileType_filenumber" name="fileType_filenumber" style="width: 120px">
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-default" value="+"
+                       onclick="addItem('add_item_template_add_btn_template')">
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-default" value="-" onclick="removeItem(event)">
+            </div>
+        </div>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade " id="modalinfo" tabindex="-1" role="dialog" aria-labelledby="modalinfoLabel"
+         aria-hidden="true">
+        <form id="modelinfo_form" enctype="multipart/form-data" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="modalinfoLabel">模型信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label for="modelinfoName" class="form-label">模型名称:</label>
+                            <input id="modelinfoName" name="modelinfoName" readonly="readonly"
+                                   style="background-color:#FFFFFF" class="form-control" value="">
+                        </div>
+                        <div>
+                            <label for="modelinfoType" class="form-label">模型类型:</label>
+                            <input id="modelinfoType" name="modelinfoType" readonly="readonly"
+                                   style="background-color:#FFFFFF" class="form-control" value="">
+                        </div>
+                        <div id="appkeyinfolists">
+                            <label for="modelinfoAppkey" class="form-label">appkey信息:</label>
+                            <input id="modelinfoAppkey" name="modelinfoAppkey" readonly="readonly"
+                                   style="background-color: #FFFFFF" class="form-control" value="">
+                        </div>
+                        <div>
+                            <label for="modelinfoHosts" class="form-label">范围限制:</label>
+                            <input id="modelinfoHosts" name="modelinfoHosts" readonly="readonly"
+                                   style="background-color: #FFFFFF" class="form-control" value="">
+                        </div>
+                        <div>
+                            <label for="enabled" class="form-label">生效状态:</label>
+                            <input id="enabledinfo" name="enabledinfo" class="form-control" value="" readonly="readonly"
+                                   style="background-color: #FFFFFF">
+                        </div>
+                        <label for="domaininfoIdList" id="showModelDomainids" class="form-label">DomainIds:</label>
+                        <div id="domaininfoIdList">
+                        </div>
+
+                        <label id="showModelFile" class="form-label">模型文件:</label>
+                        <div id="fileinfolist">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+            <div id="info_item_template_numb" style="display: none">
+                <div class="item form-inline" style="margin-top:10px">
+                    <div class="form-group">
+                        <input class="input-large" value="文件名：modelinfofileName" readonly="readonly"
+                               style="background-color: #FFFFFF;height:30px;">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" value="类型：modelinfofileType" readonly="readonly"
+                               style="background-color: #FFFFFF">
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-warning" href="modelinfofileHref">下载文件</a>
+                    </div>
+                </div>
+            </div>
+            <div id="show_domainid_template" style="display: none">
+                <div class="item form-inline panel panel-success" style="margin-bottom: 0px;margin-top: 5px;">
+
+                    <div class="panel-heading" style="margin-bottom: 0px;    padding: 2px 1px;">
+                        <div class="form-group">
+                            <input class="input-large" type="text" value="domainNameInfo" readonly="readonly"
+                                   style="background-color:#FFFFFF" style="height:30px;">
+                        </div>
+                        <div class="form-group">
+                            <input class="input-large" value="主key:mainKey" type="text" readonly="readonly"
+                                   style="background-color:#FFFFFF" style="height:30px;">
+                        </div>
+                        <div class="form-group">
+                            <input class="input-large" value="allLoad" type="text" readonly="readonly"
+                                   style="background-color:#FFFFFF" style="height:30px;">
+                        </div>
+                        <div class="form-group"
+                             style="float: right;display: inline-block;margin-top: 5px;margin-right: 5px">
+                            <a><p class="fa fa-angle-double-up" value="0" data-toggle="collapse"
+                                  onclick="foldFunc(this,'show_domainfield_template_domainNumber')"/></a>
+                        </div>
+
+                    </div>
+                    <div class="panel-body" style="margin-bottom: 0px;    padding: 1px;">
+                        <div id="show_domainfield_template_domainNumber" class="collapse">
+                            <input type="hidden" name="domainid_index" value="1">
+                            <input type="hidden" name="domainfield_num" value="1">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="show_domainfield_template" style="display: none">
+                <div class="item form-inline" style="margin-top:10px">
+                    <div class="form-group">
+                        <input class="input-large" type="text" value="field:FieldName" readonly="readonly"
+                               style="background-color:#FFFFFF" style="height:30px;">
+                    </div>
+                    <div class="form-group">
+                        <input class="input-large" value="map:FieldMap" type="text" readonly="readonly"
+                               style="background-color:#FFFFFF" style="height:30px;">
+                    </div>
+                    <!-- <div class="form-group" >
+                         <input  class="input-large" value="exactor:FieldExactor" readonly="readonly" style="background-color:#FFFFFF"  type="text" style="height:30px;" >
+                     </div>-->
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="../../vendor/jquery/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="../../vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+<script src="../../js/jquery.timelinr-0.9.6.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../../dist/js/sb-admin-2.js"></script>
+<script src="../../dist/js/jquery-editable-select.js"></script>
+<script src="../../js/common.js"></script>
+
+
+<script src="../../jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="../../js/model-manage/model-manage.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function () {
+        $('#modelmanage-table').DataTable({
+            "responsive": true,
+            "destroy": true,
+            "ajax": '/api/modelmanage/list',
+            "aaSorting": [[0, "desc"]]
+        });
+    });
+
+</script>
+
+</body>
+
+</html>

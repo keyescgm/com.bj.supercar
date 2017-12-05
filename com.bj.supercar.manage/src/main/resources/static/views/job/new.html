@@ -1,0 +1,84 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-offset-2 col-md-7">
+            <div class="card" data-ng-controller="newJobCtr">
+                <div class="card-header">
+                    <strong>新建Job</strong>
+                </div>
+                <div class="card-block">
+                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="jobName">job名称</label>
+                            <div class="col-md-9">
+                                <input id="jobName" name="textarea-input" rows="9" class="form-control" placeholder="job名称" data-ng-model="jobName"></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="dataType">数据源</label>
+                            <div class="col-md-9">
+                                <select id="dataType" name="select" class="form-control" data-ng-model="dataType">
+                                    <option value="0">Please select</option>
+                                    <option value="1">localFile</option>
+                                    <option value="2">HDFS文件</option>
+                                    <option value="3">Hive数据</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="dataSourceInput">数据源文件</label>
+                            <div class="col-md-9">
+                                <textarea id="dataSourceInput" name="textarea-input" rows="9" class="form-control" data-ng-model="dataSource" placeholder="Hive数据源填写要查询的sql，其他的请输入文件目录"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="splitRatio">splitRatio</label>
+                            <div class="col-md-9">
+                                <input id="splitRatio" data-ng-model="splitRatio" name="textarea-input" rows="9" class="form-control" placeholder="请输入训练数据的占比，0.6表示60%的数据用于训练40%用于crossValidation"></input>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="trainer">训练算法</label>
+                            <div class="col-md-9">
+                                <select id="trainer" name="select" class="form-control" data-ng-model="trainType">
+                                    <option value="0">Please select</option>
+                                    <option value="1">xgboost</option>
+                                    <option value="2">lr</option>
+                                    <option value="3">Hive数据</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 form-control-label" for="jobParam">job参数</label>
+                            <div class="col-md-9">
+                                <textarea id="jobParam" data-ng-model="jobParam" name="textarea-input" rows="9" class="form-control" placeholder="json格式的Job参数"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" data-ng-click="saveJob()" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i>保存</button>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa  fa-check-circle-o"></i>提交</button>
+                    <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i>运行</button>
+                </div>
+            </div>
+        </div>
+        <!--/.col-->
+        <div class="col-md-4" data-ng-controller="currentJobTimeLine">
+            <timeline>
+                <timeline-event ng-repeat="event in events" side="right">
+                    <timeline-badge class="{{event.badgeClass}}">
+                        <i class="glyphicon {{event.badgeIconClass}}"></i>
+                    </timeline-badge>
+                    <timeline-panel class="{{event.badgeClass}}">
+                        <timeline-heading>
+                            <h4>{{event.title}}</h4>
+                        </timeline-heading>
+                        <p>{{event.content}}</p>
+                    </timeline-panel>
+                </timeline-event>
+            </timeline>
+        </div>
+    </div>
+    <!--/.row-->
+
+</div>

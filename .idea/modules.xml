@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/com-bj-supercar.iml" filepath="$PROJECT_DIR$/com-bj-supercar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.bj.supercar.jpa/com-bj-supercar-jpa.iml" filepath="$PROJECT_DIR$/com.bj.supercar.jpa/com-bj-supercar-jpa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.bj.supercar.manage/com-bj-supercar-mvc.iml" filepath="$PROJECT_DIR$/com.bj.supercar.manage/com-bj-supercar-mvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.bj.supercar.weixin/com-bj-supercar-weixin.iml" filepath="$PROJECT_DIR$/com.bj.supercar.weixin/com-bj-supercar-weixin.iml" />
+    </modules>
+  </component>
+</project>

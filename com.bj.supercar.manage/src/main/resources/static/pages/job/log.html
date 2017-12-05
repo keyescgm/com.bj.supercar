@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log</title>
+</head>
+<body onload="loadLog()">
+<ul style="font-family: Courier, monospace;font-size: 5px;list-style: none"></ul>
+</body>
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    function loadLog() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var jobId = urlParams.get('jobId');
+        var type = urlParams.get('type');
+        var start = 0;
+        var end = 1000;
+        $.get("/api/job/tailf?type="+type+"&jobId="+jobId+"&start="+start+"&end="+end, function(response) {
+            start = response.end;
+            end = start + 100;
+            appendLog(response.appendLog)
+        });
+        window.setInterval(function () {
+            $.get("/api/job/tailf?type="+type+"&jobId="+jobId+"&start="+start+"&end="+end, function(response) {
+                start = response.end;
+                end = start + 100;
+                appendLog(response.appendLog)
+            })
+        }, 1000);
+
+
+    }
+
+    function appendLog(logs) {
+        for(var i in logs) {
+            $("ul").append($("<li>" + logs[i] + "</li>"))
+        }
+    }
+</script>
+</html>
