@@ -153,6 +153,7 @@ CREATE TABLE `t_carinfo` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(500) NOT NULL COMMENT '标题',
   `brand_id` bigint(20) NOT NULL COMMENT '品牌类型id',
+  `city_id` bigint(20) NOT NULL COMMENT '所属城市名称',
   `vehiclemodel_id` bigint(20) NOT NULL COMMENT '车型类型id',
   `speed_type` smallint(2) DEFAULT '0' COMMENT '变速箱类型，0：暂无，1：自动，2：手动，3：自动手动都有',
   `drive_type` smallint(2) DEFAULT '0' COMMENT '驱动类型，0：暂无，1：一驱，2：二驱，3：三驱，4：四驱',
