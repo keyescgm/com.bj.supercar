@@ -278,7 +278,7 @@ function modelFullInfo(e) {
                 $("#fileinfolist").html("");
                 for (var i = 0; i < manageModelVO.modelFileVOList.length; i++) {
                     var modelFileVO = manageModelVO.modelFileVOList[i];
-                    var template = $("#info_item_template_numb").html().replaceAll('modelinfofileName', modelFileVO.fileName).replaceAll("modelinfofileType", modelFileVO.fileType).replaceAll("modelinfofileHref", "http://mss.vip.sankuai.com/v1/mss_a1fe05429b124698a003ab814fed75a2/modelmanager/" + modelFileVO.fileObjectName);
+                    var template = $("#info_item_template_numb").html().replaceAll('modelinfofileName', modelFileVO.fileName).replaceAll("modelinfofileType", modelFileVO.fileType).replaceAll("modelinfofileHref", "" + modelFileVO.fileObjectName);
                     $("#fileinfolist").append(template)
                 }
                 if (manageModelVO.modelFileVOList.length == 0) {

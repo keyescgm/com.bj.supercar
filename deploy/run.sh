@@ -36,7 +36,7 @@ function run() {
     ip="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
 
     EXEC_JAVA="exec ${JAVA_CMD} -jar -server"
-    EXEC_JAVA=$EXEC_JAVA" -Dserver.port=8080 -Dss1=${APP_NAME} -Dfile.encoding=UTF-8 -Dapp.key=${APP_NAME} -Dapp.ip=${ip} -Dapp.host=${HOSTNAME} -Dsun.jnu.encoding=UTF-8 -Djava.io.tmpdir=/tmp -Djava.net.preferIPv6Addresses=false -Duser.timezone=GMT+08 -Djava.util.prefs.systemRoot=/home/sankuai/.java"
+    EXEC_JAVA=$EXEC_JAVA" -Dserver.port=8080 -Dss1=${APP_NAME} -Dfile.encoding=UTF-8 -Dapp.key=${APP_NAME} -Dapp.ip=${ip} -Dapp.host=${HOSTNAME} -Dsun.jnu.encoding=UTF-8 -Djava.io.tmpdir=/tmp -Djava.net.preferIPv6Addresses=false -Duser.timezone=GMT+08 -Djava.util.prefs.systemRoot=/home/fjsh/.java"
 
     #staging环境添加远程调试端口
     #if [ $ENV = "staging" ]; then
