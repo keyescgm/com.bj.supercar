@@ -46,6 +46,23 @@ CREATE TABLE `t_brand` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='品牌表';
 
 -- ----------------------------
+-- Table structure for t_series
+-- ----------------------------
+DROP TABLE IF EXISTS `t_series`;
+CREATE TABLE `t_series` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) NOT NULL COMMENT '品牌id',
+  `name` varchar(200) NOT NULL COMMENT '车系名称',
+  `enabled` smallint(2) DEFAULT '1' COMMENT '是否被删除，1：未被删除，0：已删除',
+  `insert_time` TIMESTAMP NULL COMMENT '录入时间',
+  `lastupdate_time` TIMESTAMP NULL COMMENT '修改时间',
+  `operator` varchar(50) DEFAULT '' COMMENT '操作人',
+  `describ` text  COMMENT '备用描述信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='车系表';
+
+
+-- ----------------------------
 -- Table structure for t_vehiclemodel
 -- ----------------------------
 DROP TABLE IF EXISTS `t_vehiclemodel`;
@@ -153,6 +170,7 @@ CREATE TABLE `t_carinfo` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(500) NOT NULL COMMENT '标题',
   `brand_id` bigint(20) NOT NULL COMMENT '品牌类型id',
+  `series_id` bigint(20)  NULL COMMENT '车系id，可以没有',
   `city_id` bigint(20) NOT NULL COMMENT '所属城市名称',
   `vehiclemodel_id` bigint(20) NOT NULL COMMENT '车型类型id',
   `speed_type` smallint(2) DEFAULT '0' COMMENT '变速箱类型，0：暂无，1：自动，2：手动，3：自动手动都有',
