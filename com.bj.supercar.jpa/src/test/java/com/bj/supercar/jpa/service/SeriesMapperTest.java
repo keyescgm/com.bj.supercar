@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.bj.supercar.jpa.main.StartApp;
-import com.bj.supercar.jpa.repository.UserMapper;
+import com.bj.supercar.jpa.repository.SeriesMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,13 +13,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = StartApp.class)
 @WebAppConfiguration
-public class UserMapperTest {
+public class SeriesMapperTest {
 
 	@Resource
-	UserMapper userMapper;
+	SeriesMapper seriesMapper;
 	@Test
 	public void testGetCount() {
-		System.out.println(userMapper.getCount());
+		System.out.println(seriesMapper.getCount());
 	}
 	@Test
 	public void testDeleteByPrimaryKey() {
@@ -38,7 +38,7 @@ public class UserMapperTest {
 
 	@Test
 	public void testSelectByPrimaryKey() {
-		//userMapper.selectByPrimaryKey(1l);
+		//seriesMapper.selectByPrimaryKey(1l);
 	}
 
 	@Test

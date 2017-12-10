@@ -1,14 +1,11 @@
 package com.bj.supercar.manage.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.bj.supercar.jpa.entity.AppkeyEntity;
-import com.bj.supercar.jpa.repository.AppkeyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/demo")
@@ -16,15 +13,16 @@ public class DemoController {
 	//http://localhost:8080/demo/info
 	//@Autowired
 	//private DemoService demoService;
-	@Autowired
-	private AppkeyMapper appkeyMapper;
+//	@Autowired
+//	private AppkeyMapper appkeyMapper;
 	@ResponseBody
 	@RequestMapping("/info")
 	public String getInfo(HttpServletRequest request,
 			HttpServletResponse response) {
 		String username = request.getParameter("username");
-		AppkeyEntity appkeyEntity=appkeyMapper.selectByPrimaryKey(1l);
-		return "fjsh web"+appkeyEntity.getAppkeyName();
+//		AppkeyEntity appkeyEntity=appkeyMapper.selectByPrimaryKey(1l);
+//		return "fjsh web"+appkeyEntity.getAppkeyName();
+		return "fjsh";
 	}
 
 	/*

@@ -1,14 +1,18 @@
-package com.bj.supercar.weixin.controller;
+package com.bj.supercar.jpa.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.alibaba.fastjson.JSON;
 
 @Controller
-@RequestMapping("/weixin")
+@RequestMapping("/demo")
 public class DemoController {
 	//@Autowired
 	//private DemoService demoService;
@@ -18,7 +22,7 @@ public class DemoController {
 	public String getInfo(HttpServletRequest request,
 			HttpServletResponse response) {
 		String username = request.getParameter("username");
-		return "fjsh web123";
+		return "fjsh web";
 	}
 
 	/*

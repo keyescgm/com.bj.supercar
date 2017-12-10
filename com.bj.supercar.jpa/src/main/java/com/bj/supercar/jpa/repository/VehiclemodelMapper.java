@@ -1,18 +1,18 @@
 package com.bj.supercar.jpa.repository;
 
-import com.bj.supercar.jpa.dynamicsql.AuthSql;
-import com.bj.supercar.jpa.entity.AuthEntity;
+import com.bj.supercar.jpa.dynamicsql.VehiclemodelSql;
+import com.bj.supercar.jpa.entity.VehiclemodelEntity;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.*;
 /**
- * ClassName：AuthMapper
- * Description：数据库中 t_auth表对应的实体类
+ * ClassName：VehiclemodelMapper
+ * Description：数据库中 t_vehiclemodel表对应的实体类
  * @author auto
  * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
-public interface AuthMapper {
+public interface VehiclemodelMapper {
     /**
      * 根据主键id删除数据
      * @param id
@@ -26,17 +26,17 @@ public interface AuthMapper {
      * @param entity
      * @return
      */
-    @Insert("insert into t_auth (auth_name,insert_time,lastupdate_time,operator,describ)" +
-    "values( #{authName,jdbcType=VARCHAR} ,#{insertTime,jdbcType=TIMESTAMP} ,#{lastupdateTime,jdbcType=TIMESTAMP} ,#{operator,jdbcType=VARCHAR} ,#{describ,jdbcType=VARCHAR} )")
+    @Insert("insert into t_vehiclemodel (name,pic_url,enabled,insert_time,lastupdate_time,operator,describ)" +
+    "values( #{name,jdbcType=VARCHAR} ,#{picUrl,jdbcType=VARCHAR} ,#{enabled,jdbcType=SMALLINT} ,#{insertTime,jdbcType=TIMESTAMP} ,#{lastupdateTime,jdbcType=TIMESTAMP} ,#{operator,jdbcType=VARCHAR} ,#{describ,jdbcType=VARCHAR} )")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(AuthEntity entity);
+    int insert(VehiclemodelEntity entity);
 
     /**
      * 根据已有数据的列插入数据
      * @param entity
      * @return
      */
-    //int insertSelective(AuthEntity entity);
+    //int insertSelective(VehiclemodelEntity entity);
 
     /**
      * 根据主键id获取实体
@@ -45,13 +45,15 @@ public interface AuthMapper {
      */
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "authName", column = "auth_name"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "picUrl", column = "pic_url"),
+            @Result(property = "enabled", column = "enabled"),
             @Result(property = "insertTime", column = "insert_time"),
             @Result(property = "lastupdateTime", column = "lastupdate_time"),
             @Result(property = "operator", column = "operator"),
             @Result(property = "describ", column = "describ")    })
-    @Select("SELECT * FROM t_auth WHERE id = #{id} limit 1")
-    AuthEntity selectByPrimaryKey(Long id);
+    @Select("SELECT * FROM t_vehiclemodel WHERE id = #{id} limit 1")
+    VehiclemodelEntity selectByPrimaryKey(Long id);
 
     /**
     * 分页获取数据集合
@@ -61,13 +63,15 @@ public interface AuthMapper {
     */
     @Results({
         @Result(property = "id", column = "id"),
-        @Result(property = "authName", column = "auth_name"),
+        @Result(property = "name", column = "name"),
+        @Result(property = "picUrl", column = "pic_url"),
+        @Result(property = "enabled", column = "enabled"),
         @Result(property = "insertTime", column = "insert_time"),
         @Result(property = "lastupdateTime", column = "lastupdate_time"),
         @Result(property = "operator", column = "operator"),
         @Result(property = "describ", column = "describ")    })
-    @Select("SELECT * FROM t_auth  limit #{offset},#{size}")
-    List<AuthEntity> findAllByPages(@Param("offset") int offset,@Param("size") int size);
+    @Select("SELECT * FROM t_vehiclemodel  limit #{offset},#{size}")
+    List<VehiclemodelEntity> findAllByPages(@Param("offset") int offset,@Param("size") int size);
 
     /**
     * 根据条件进行查询，返回列表信息
@@ -79,46 +83,48 @@ public interface AuthMapper {
     */
     @Results({
             @Result(property = "id", column = "id"),
-                @Result(property = "authName", column = "auth_name"),
+                @Result(property = "name", column = "name"),
+                @Result(property = "picUrl", column = "pic_url"),
+                @Result(property = "enabled", column = "enabled"),
                 @Result(property = "insertTime", column = "insert_time"),
                 @Result(property = "lastupdateTime", column = "lastupdate_time"),
                 @Result(property = "operator", column = "operator"),
                 @Result(property = "describ", column = "describ")    })
-    @SelectProvider(type=AuthSql.class, method="getListByCondSql")
-    List<AuthEntity> getListByCond(String columns,String where,String orderby,String limit);
+    @SelectProvider(type=VehiclemodelSql.class, method="getListByCondSql")
+    List<VehiclemodelEntity> getListByCond(String columns,String where,String orderby,String limit);
 
     /**
      * 根据已有数据的列更新数据
      * @param entity
      * @return
      */
-    //int updateByPrimaryKeySelective(AuthEntity entity);
+    //int updateByPrimaryKeySelective(VehiclemodelEntity entity);
 
     /**
      * 更新实体信息
      * @param entity
      * @return
      */
-    @Update("update t_auth set   auth_name=#{authName,jdbcType=VARCHAR} , insert_time=#{insertTime,jdbcType=TIMESTAMP} , lastupdate_time=#{lastupdateTime,jdbcType=TIMESTAMP} , operator=#{operator,jdbcType=VARCHAR} , describ=#{describ,jdbcType=VARCHAR}   where id=#{id}")
-    int updateByPrimaryKey(AuthEntity entity);
+    @Update("update t_vehiclemodel set   name=#{name,jdbcType=VARCHAR} , pic_url=#{picUrl,jdbcType=VARCHAR} , enabled=#{enabled,jdbcType=SMALLINT} , insert_time=#{insertTime,jdbcType=TIMESTAMP} , lastupdate_time=#{lastupdateTime,jdbcType=TIMESTAMP} , operator=#{operator,jdbcType=VARCHAR} , describ=#{describ,jdbcType=VARCHAR}   where id=#{id}")
+    int updateByPrimaryKey(VehiclemodelEntity entity);
 
     /**
     *根据条件查询count数量
     * @param where 查询条件 默认为空
     */
-    @SelectProvider(type=AuthSql.class, method="getCountByCondSql")
+    @SelectProvider(type=VehiclemodelSql.class, method="getCountByCondSql")
     int getCountByCond(String where);
     /**
     *根据条件删除
     * @param where 查询条件 默认为空
     */
-    @DeleteProvider(type=AuthSql.class, method="deleteByCondSql")
+    @DeleteProvider(type=VehiclemodelSql.class, method="deleteByCondSql")
     int deleteByCond(String where);
     /**
     * 简单count查询
     * @return size
     */
-    @Select("SELECT count(*) FROM t_auth ")
+    @Select("SELECT count(*) FROM t_vehiclemodel ")
     int getCount();
 
 }

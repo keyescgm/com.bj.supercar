@@ -3,26 +3,26 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * ClassName：UserEntity
- * Description：数据库中 t_user表对应的实体类
+ * ClassName：SeriesEntity
+ * Description：数据库中 t_series表对应的实体类
  * @author auto
  * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
 @Data
-public class UserEntity  {
+public class SeriesEntity  {
     /**
 	     * 
 	     */
 	    private long id;
 	    /**
-	     * 用户名
+	     * 品牌id
 	     */
-	    private String userName;
+	    private long brandId;
 	    /**
-	     * 权限IDs,多个之间以,隔开
+	     * 车系名称
 	     */
-	    private String authIds;
+	    private String name;
 	    /**
 	     * 是否被删除，1：未被删除，0：已删除
 	     */

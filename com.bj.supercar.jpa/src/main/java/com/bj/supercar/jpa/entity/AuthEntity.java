@@ -6,7 +6,7 @@ import java.util.Date;
  * ClassName：AuthEntity
  * Description：数据库中 t_auth表对应的实体类
  * @author auto
- * @Date 2017-12-04 23:43:29
+ * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
 @Data
@@ -32,7 +32,7 @@ public class AuthEntity  {
 	     */
 	    private String operator;
 	    /**
-	     * 
+	     * 备用描述信息
 	     */
 	    private String describ;
 	

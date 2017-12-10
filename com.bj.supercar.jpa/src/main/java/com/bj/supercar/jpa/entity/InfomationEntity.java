@@ -3,26 +3,34 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * ClassName：UserEntity
- * Description：数据库中 t_user表对应的实体类
+ * ClassName：InfomationEntity
+ * Description：数据库中 t_infomation表对应的实体类
  * @author auto
  * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
 @Data
-public class UserEntity  {
+public class InfomationEntity  {
     /**
 	     * 
 	     */
 	    private long id;
 	    /**
-	     * 用户名
+	     * title标题
 	     */
-	    private String userName;
+	    private String title;
 	    /**
-	     * 权限IDs,多个之间以,隔开
+	     * 头图信息，多个用分号隔开
 	     */
-	    private String authIds;
+	    private String picUrls;
+	    /**
+	     * 主体信息
+	     */
+	    private String content;
+	    /**
+	     * 信息分类，1：基础信息，0：头图等信息
+	     */
+	    private int infoType;
 	    /**
 	     * 是否被删除，1：未被删除，0：已删除
 	     */

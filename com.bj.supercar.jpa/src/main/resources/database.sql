@@ -76,7 +76,7 @@ CREATE TABLE `t_vehiclemodel` (
   `operator` varchar(50) DEFAULT '' COMMENT '操作人',
   `describ` text  COMMENT '备用描述信息',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='车型表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='车型表，例如suv';
 
 -- ----------------------------
 -- Table structure for t_color
@@ -135,6 +135,7 @@ CREATE TABLE `t_buycarinfo` (
   `phone` varchar(20) NOT NULL COMMENT '联系电话',
   `city_id` bigint(20) NOT NULL COMMENT '所属城市名称',
   `car_desc` text NOT NULL COMMENT '描述信息',
+  `types` smallint(2) DEFAULT '1' COMMENT '留言类型，1：买车，0：卖车',
   `enabled` smallint(2) DEFAULT '1' COMMENT '是否被删除，1：未被删除，0：已删除',
   `insert_time` TIMESTAMP NULL COMMENT '录入时间',
   `lastupdate_time` TIMESTAMP NULL COMMENT '修改时间',
@@ -153,6 +154,7 @@ CREATE TABLE `t_infomation` (
   `title` varchar(200) NOT NULL COMMENT 'title标题',
   `pic_urls` varchar(500) NOT NULL COMMENT '头图信息，多个用分号隔开',
   `content` text NOT NULL COMMENT '主体信息',
+  `info_type` smallint(2) DEFAULT '1' COMMENT '信息分类，1：基础信息，0：头图等信息',
   `enabled` smallint(2) DEFAULT '1' COMMENT '是否被删除，1：未被删除，0：已删除',
   `insert_time` TIMESTAMP NULL COMMENT '录入时间',
   `lastupdate_time` TIMESTAMP NULL COMMENT '修改时间',

@@ -3,12 +3,12 @@ package com.bj.supercar.jpa.dynamicsql;
 import org.apache.ibatis.jdbc.SQL;
 import java.util.*;
 /**
- * Description：数据库中 t_auth表对应的动态sql语句
+ * Description：数据库中 t_brand表对应的动态sql语句
  * @author auto
  * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
-public class AuthSql {
+public class BrandSql {
 
     /**
     * 根据条件进行删除，返回列表
@@ -16,7 +16,7 @@ public class AuthSql {
     public String deleteByCondSql(final String where) {
         return new SQL() {
             {
-                DELETE_FROM("t_auth");
+                DELETE_FROM("t_brand");
                     if (!(null == where || where.trim().equals(""))) {
                      WHERE(where);
                 }
@@ -49,7 +49,7 @@ public class AuthSql {
                 }else {
                     SELECT("*");
                 }
-                FROM("t_auth");
+                FROM("t_brand");
                 if(!(null==where||where.trim().equals("")))
                 {
                      WHERE(where);
@@ -66,7 +66,7 @@ public class AuthSql {
         return new SQL(){
             {
                 SELECT("count(*)");
-                FROM("t_auth");
+                FROM("t_brand");
                 if(!(null==where||where.trim().equals("")))
                 {
                      WHERE(where);

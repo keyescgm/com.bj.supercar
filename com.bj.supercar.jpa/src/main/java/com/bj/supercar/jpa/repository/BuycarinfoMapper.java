@@ -1,18 +1,18 @@
 package com.bj.supercar.jpa.repository;
 
-import com.bj.supercar.jpa.dynamicsql.UserSql;
-import com.bj.supercar.jpa.entity.UserEntity;
+import com.bj.supercar.jpa.dynamicsql.BuycarinfoSql;
+import com.bj.supercar.jpa.entity.BuycarinfoEntity;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.*;
 /**
- * ClassName：UserMapper
- * Description：数据库中 t_user表对应的实体类
+ * ClassName：BuycarinfoMapper
+ * Description：数据库中 t_buycarinfo表对应的实体类
  * @author auto
  * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
-public interface UserMapper {
+public interface BuycarinfoMapper {
     /**
      * 根据主键id删除数据
      * @param id
@@ -26,17 +26,17 @@ public interface UserMapper {
      * @param entity
      * @return
      */
-    @Insert("insert into t_user (user_name,auth_ids,enabled,insert_time,lastupdate_time,operator,describ)" +
-    "values( #{userName,jdbcType=VARCHAR} ,#{authIds,jdbcType=VARCHAR} ,#{enabled,jdbcType=SMALLINT} ,#{insertTime,jdbcType=TIMESTAMP} ,#{lastupdateTime,jdbcType=TIMESTAMP} ,#{operator,jdbcType=VARCHAR} ,#{describ,jdbcType=VARCHAR} )")
+    @Insert("insert into t_buycarinfo (name,phone,city_id,car_desc,types,enabled,insert_time,lastupdate_time,operator,describ)" +
+    "values( #{name,jdbcType=VARCHAR} ,#{phone,jdbcType=VARCHAR} ,#{cityId,jdbcType=BIGINT} ,#{carDesc,jdbcType=VARCHAR} ,#{types,jdbcType=SMALLINT} ,#{enabled,jdbcType=SMALLINT} ,#{insertTime,jdbcType=TIMESTAMP} ,#{lastupdateTime,jdbcType=TIMESTAMP} ,#{operator,jdbcType=VARCHAR} ,#{describ,jdbcType=VARCHAR} )")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(UserEntity entity);
+    int insert(BuycarinfoEntity entity);
 
     /**
      * 根据已有数据的列插入数据
      * @param entity
      * @return
      */
-    //int insertSelective(UserEntity entity);
+    //int insertSelective(BuycarinfoEntity entity);
 
     /**
      * 根据主键id获取实体
@@ -45,15 +45,18 @@ public interface UserMapper {
      */
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "userName", column = "user_name"),
-            @Result(property = "authIds", column = "auth_ids"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "phone", column = "phone"),
+            @Result(property = "cityId", column = "city_id"),
+            @Result(property = "carDesc", column = "car_desc"),
+            @Result(property = "types", column = "types"),
             @Result(property = "enabled", column = "enabled"),
             @Result(property = "insertTime", column = "insert_time"),
             @Result(property = "lastupdateTime", column = "lastupdate_time"),
             @Result(property = "operator", column = "operator"),
             @Result(property = "describ", column = "describ")    })
-    @Select("SELECT * FROM t_user WHERE id = #{id} limit 1")
-    UserEntity selectByPrimaryKey(Long id);
+    @Select("SELECT * FROM t_buycarinfo WHERE id = #{id} limit 1")
+    BuycarinfoEntity selectByPrimaryKey(Long id);
 
     /**
     * 分页获取数据集合
@@ -63,15 +66,18 @@ public interface UserMapper {
     */
     @Results({
         @Result(property = "id", column = "id"),
-        @Result(property = "userName", column = "user_name"),
-        @Result(property = "authIds", column = "auth_ids"),
+        @Result(property = "name", column = "name"),
+        @Result(property = "phone", column = "phone"),
+        @Result(property = "cityId", column = "city_id"),
+        @Result(property = "carDesc", column = "car_desc"),
+        @Result(property = "types", column = "types"),
         @Result(property = "enabled", column = "enabled"),
         @Result(property = "insertTime", column = "insert_time"),
         @Result(property = "lastupdateTime", column = "lastupdate_time"),
         @Result(property = "operator", column = "operator"),
         @Result(property = "describ", column = "describ")    })
-    @Select("SELECT * FROM t_user  limit #{offset},#{size}")
-    List<UserEntity> findAllByPages(@Param("offset") int offset,@Param("size") int size);
+    @Select("SELECT * FROM t_buycarinfo  limit #{offset},#{size}")
+    List<BuycarinfoEntity> findAllByPages(@Param("offset") int offset,@Param("size") int size);
 
     /**
     * 根据条件进行查询，返回列表信息
@@ -83,48 +89,51 @@ public interface UserMapper {
     */
     @Results({
             @Result(property = "id", column = "id"),
-                @Result(property = "userName", column = "user_name"),
-                @Result(property = "authIds", column = "auth_ids"),
+                @Result(property = "name", column = "name"),
+                @Result(property = "phone", column = "phone"),
+                @Result(property = "cityId", column = "city_id"),
+                @Result(property = "carDesc", column = "car_desc"),
+                @Result(property = "types", column = "types"),
                 @Result(property = "enabled", column = "enabled"),
                 @Result(property = "insertTime", column = "insert_time"),
                 @Result(property = "lastupdateTime", column = "lastupdate_time"),
                 @Result(property = "operator", column = "operator"),
                 @Result(property = "describ", column = "describ")    })
-    @SelectProvider(type=UserSql.class, method="getListByCondSql")
-    List<UserEntity> getListByCond(String columns,String where,String orderby,String limit);
+    @SelectProvider(type=BuycarinfoSql.class, method="getListByCondSql")
+    List<BuycarinfoEntity> getListByCond(String columns,String where,String orderby,String limit);
 
     /**
      * 根据已有数据的列更新数据
      * @param entity
      * @return
      */
-    //int updateByPrimaryKeySelective(UserEntity entity);
+    //int updateByPrimaryKeySelective(BuycarinfoEntity entity);
 
     /**
      * 更新实体信息
      * @param entity
      * @return
      */
-    @Update("update t_user set   user_name=#{userName,jdbcType=VARCHAR} , auth_ids=#{authIds,jdbcType=VARCHAR} , enabled=#{enabled,jdbcType=SMALLINT} , insert_time=#{insertTime,jdbcType=TIMESTAMP} , lastupdate_time=#{lastupdateTime,jdbcType=TIMESTAMP} , operator=#{operator,jdbcType=VARCHAR} , describ=#{describ,jdbcType=VARCHAR}   where id=#{id}")
-    int updateByPrimaryKey(UserEntity entity);
+    @Update("update t_buycarinfo set   name=#{name,jdbcType=VARCHAR} , phone=#{phone,jdbcType=VARCHAR} , city_id=#{cityId,jdbcType=BIGINT} , car_desc=#{carDesc,jdbcType=VARCHAR} , types=#{types,jdbcType=SMALLINT} , enabled=#{enabled,jdbcType=SMALLINT} , insert_time=#{insertTime,jdbcType=TIMESTAMP} , lastupdate_time=#{lastupdateTime,jdbcType=TIMESTAMP} , operator=#{operator,jdbcType=VARCHAR} , describ=#{describ,jdbcType=VARCHAR}   where id=#{id}")
+    int updateByPrimaryKey(BuycarinfoEntity entity);
 
     /**
     *根据条件查询count数量
     * @param where 查询条件 默认为空
     */
-    @SelectProvider(type=UserSql.class, method="getCountByCondSql")
+    @SelectProvider(type=BuycarinfoSql.class, method="getCountByCondSql")
     int getCountByCond(String where);
     /**
     *根据条件删除
     * @param where 查询条件 默认为空
     */
-    @DeleteProvider(type=UserSql.class, method="deleteByCondSql")
+    @DeleteProvider(type=BuycarinfoSql.class, method="deleteByCondSql")
     int deleteByCond(String where);
     /**
     * 简单count查询
     * @return size
     */
-    @Select("SELECT count(*) FROM t_user ")
+    @Select("SELECT count(*) FROM t_buycarinfo ")
     int getCount();
 
 }

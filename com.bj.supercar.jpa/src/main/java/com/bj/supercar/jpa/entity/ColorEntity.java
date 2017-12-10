@@ -3,26 +3,26 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * ClassName：UserEntity
- * Description：数据库中 t_user表对应的实体类
+ * ClassName：ColorEntity
+ * Description：数据库中 t_color表对应的实体类
  * @author auto
  * @Date 2017-12-10 15:42:58
  * @since JRE 1.6.0_22  or higher
  */
 @Data
-public class UserEntity  {
+public class ColorEntity  {
     /**
 	     * 
 	     */
 	    private long id;
 	    /**
-	     * 用户名
+	     * 颜色名称
 	     */
-	    private String userName;
+	    private String name;
 	    /**
-	     * 权限IDs,多个之间以,隔开
+	     * 图标地址
 	     */
-	    private String authIds;
+	    private String picUrl;
 	    /**
 	     * 是否被删除，1：未被删除，0：已删除
 	     */
